@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply text-gray-800 antialiased cursor-none;
+  }
+
+  a, button, [role="button"] {
+    @apply cursor-none;
+  }
+}
+
+@layer utilities {
+  .glass-effect {
+    @apply bg-white/10 backdrop-blur-lg border border-white/20;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600;
+  }
+}
+
+@keyframes blob1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(100px, -50px) scale(1.1); }
+  50% { transform: translate(0, -100px) scale(0.9); }
+  75% { transform: translate(-50px, 50px) scale(1.2); }
+}
+
+@keyframes blob2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-100px, 100px) scale(1.2); }
+  66% { transform: translate(50px, 50px) scale(0.8); }
+}
+
+@keyframes blob3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(100px, -100px) scale(1.3); }
+}
+
+@keyframes progress {
+  0% { width: 0%; }
+  50% { width: 70%; }
+  100% { width: 100%; }
+}
+
+@keyframes tilt {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(1deg); }
+  75% { transform: rotate(-1deg); }
+}
+
+@layer utilities {
+  .animate-blob1 {
+    animation: blob1 15s infinite;
+  }
+  .animate-blob2 {
+    animation: blob2 18s infinite;
+  }
+  .animate-blob3 {
+    animation: blob3 20s infinite;
+  }
+  .animate-progress {
+    animation: progress 2s ease-in-out infinite;
+  }
+  .animate-tilt {
+    animation: tilt 10s ease-in-out infinite;
+  }
+}
