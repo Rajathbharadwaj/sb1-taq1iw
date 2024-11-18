@@ -25,12 +25,10 @@ export default function ResumeUpload() {
     }
 
     try {
-      const loadingToast = toast.loading('Processing your resume...');
       await uploadResume(file);
-      toast.success('Resume processed successfully!', { id: loadingToast });
     } catch (error) {
-      console.error('Resume upload failed:', error);
-      toast.error(error instanceof Error ? error.message : 'Failed to process resume. Please try again.');
+      console.error('Drop error:', error);
+      toast.error('Failed to process resume. Please try again.');
     }
   }, [uploadResume]);
 

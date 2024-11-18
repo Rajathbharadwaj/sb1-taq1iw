@@ -19,26 +19,33 @@ export const useJobStore = create<JobState>((set, get) => ({
     const loadingToast = toast.loading('Processing your resume...');
     
     try {
-      // Extract text from PDF
       const text = await extractTextFromPDF(file);
       
-      // Update loading message
       toast.loading('Analyzing resume and finding matches...', {
         id: loadingToast
       });
       
-      // Upload the extracted text to API
-      const response = await uploadResumeText(text);
+      const payload = {
+        resume_text: text,
+        job_description: "" // Optional
+      };
       
-      // Transform API response
-      const jobs: JobMatch[] = response.jobs.map((job, index) => ({
+      const response = await uploadResumeText(payload);
+      
+      console.log('API Response:', response);
+      
+      if (!response.jobs_titles || !Array.isArray(response.jobs_titles)) {
+        throw new Error('Invalid response format from server');
+      }
+
+      const jobs: JobMatch[] = response.jobs_titles.map((title, index) => ({
         id: String(index + 1),
-        title: job.title || 'Unknown Position',
-        company: job.company || 'Unknown Company',
-        description: job.description || 'No description available',
-        salary: job.salary_range || 'Salary not specified',
-        location: job.location || 'Location not specified',
-        matchPercentage: Math.round(job.match_percentage || 0)
+        title: title,
+        company: 'Available Position',
+        description: 'Position matches your profile',
+        salary: 'To be discussed',
+        location: 'Various locations',
+        matchPercentage: 100
       }));
 
       if (jobs.length === 0) {

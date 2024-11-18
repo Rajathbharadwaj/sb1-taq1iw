@@ -1,7 +1,7 @@
-import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist';
-
-// Configure worker
-GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${GlobalWorkerOptions.version}/pdf.worker.min.js`;
+import * as pdfjs from 'pdfjs-dist';
+// Set up PDF.js worker
+import { GlobalWorkerOptions } from 'pdfjs-dist';
+GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
 export async function extractTextFromPDF(file: File): Promise<string> {
   try {
@@ -9,7 +9,7 @@ export async function extractTextFromPDF(file: File): Promise<string> {
     const arrayBuffer = await file.arrayBuffer();
     
     // Load the PDF document
-    const pdf = await getDocument({ data: arrayBuffer }).promise;
+    const pdf = await pdfjs.getDocument({ data: arrayBuffer }).promise;
     
     let fullText = '';
     
